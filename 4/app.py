@@ -72,7 +72,6 @@ def search_matrix_2(matrix):
     for i in range(1, len(matrix)-1):
         for m in re.finditer(r'A', matrix[i]):
             if check_corners(matrix, m.span()[0], i):
-                print([i,m.span()[0]])
                 count += 1
     return(count)
 
@@ -86,6 +85,7 @@ rotate_matrix(matrix, 3)
 
 #Q1 Diagonal
 diag_matrix_1 = angle_matrix(matrix, False)
+print_matrix(diag_matrix_1)
 Q1 += search_matrix(diag_matrix_1, True)
 diag_matrix_2 = angle_matrix(matrix, True)
 Q1 += search_matrix(diag_matrix_2, True)

@@ -36,7 +36,7 @@ def fix_update(update, rules):
     known_rules = rules.keys()
     fixed_update = update.copy()
     attempt = 0
-    while not test_update(fixed_update, rules) and attempt < 100:
+    while not test_update(fixed_update, rules) and attempt < 200:
         attempt += 1
         for i in range(0, len(fixed_update)):
             page = fixed_update[i]
@@ -49,7 +49,7 @@ def fix_update(update, rules):
                         fixed_update.remove(page)
                         rule_loc = fixed_update.index(r)
                         fixed_update.insert(rule_loc, page)
-        print(" Itterated fix {}: {}".format(i, fixed_update))
+            print(" Itterated fix {}: {}".format(i, fixed_update))
     return(fixed_update)
 
 rules,updates = get_data()

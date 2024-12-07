@@ -13,4 +13,3 @@ data = get_data()
 
 print("Q1: {}".format(Q1))
 print("Q2: {}".format(Q2))
-

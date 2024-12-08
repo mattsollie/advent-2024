@@ -119,10 +119,8 @@ def move(start, direction, horizontal, vertical, all_visited, test=True):
         
     all_visited = check_unique(visited, all_visited)
     loop_positions = []
-    if test:
-        
+    if test:        
         test_positions = visited
-        print("original TP {}".format(test_positions))
         for test_pos in test_positions:
             i = 0
             test_direction = str(direction)
@@ -146,7 +144,7 @@ def move(start, direction, horizontal, vertical, all_visited, test=True):
                 last_visited = copy.deepcopy(test_visited)
                 test_start, test_steps, test_visited, null = move(test_start, test_direction, test_horizontal, test_vertical, test_visited, False)
 
-                if len(test_visited) == len(last_visited):
+                if len(test_visited) == len(last_visited): #Seeing same coords in recent lists
                     loop_test += 1
                     coord_string = "{}:{}:{}".format(test_start[0],test_start[1],test_direction)
                     short_coord_string = "{}:{}".format(test_pos[0],test_pos[1])
@@ -155,15 +153,15 @@ def move(start, direction, horizontal, vertical, all_visited, test=True):
                         print("  LOOP DETECTED with < 24 repetitions at test pos {} for coords {}".format(test_pos, coord_string))
                         print("    {}".format(loop_coords[-(loop_coords[::-1].index(coord_string)+1):]))
 
-                    if len(loop_coords) == 24:
+                    if len(loop_coords) == 24: 
                         loop_coords.pop(0)                      
                     loop_coords.append(coord_string)
-                    if loop_test == 250:
+                    
+                    if loop_test == 250: #Took so long it must be looping
                         looped = True
-                        if short_coord_string not in SAM:
-                            print("  LONG LOOP DETECTED at {} for {}".format(test_pos, coord_string))
+                        print("  LONG LOOP DETECTED at {} for {}".format(test_pos, coord_string))
                         break
-                elif -1 in test_start:
+                elif -1 in test_start: # Test Exited Map
                     break
                 
                 test_direction = turn(test_direction)
@@ -172,24 +170,6 @@ def move(start, direction, horizontal, vertical, all_visited, test=True):
             if looped is True:
                 if test_pos[0] not in horizontal[test_pos[1]]:
                     loop_positions.append("{}:{}".format(test_pos[0],test_pos[1]))
-                if short_coord_string not in SAM:
-                    print(last_visited)
-                    print(loop_coords)
-                    for coord in loop_coords:
-                        x,y,d = coord.split(":")
-                        x = int(x)
-                        y = int(y)
-                        if d == "N":
-                            y = y + 1
-                        elif d == "S":
-                            y = y - 1
-                        elif d == "W":
-                            x = x - 1
-                        elif d == "E":
-                            x = x + 1
-                        print("Map Values in Loop:")
-                        print("{},{}".format(x,y))
-                        print((x in test_horizontal[y]) or (x == test_pos[0] and y == test_pos[1]))
     
     return(pos, steps, all_visited, loop_positions)
 

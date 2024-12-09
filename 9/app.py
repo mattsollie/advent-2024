@@ -9,11 +9,6 @@ def get_data():
             data.append(line.strip())
     return(data)
 
-def original_array(pos): #The original number from the disk will always be at 0. We have to count this way because we append into that array
-    c = pos[0]
-    count = pos.count(c)
-    return([c for i in range(0,count)])
-
 def print_disk(map, ret_str=True): #Used for Q2 to build flat array
     array = []
     for i,n in enumerate(map["free"]):

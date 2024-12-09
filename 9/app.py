@@ -12,7 +12,7 @@ def get_data():
 def print_disk(map, ret_str=True): #Used for Q2 to build flat array
     array = []
     for i,n in enumerate(map["free"]):
-        for a in map["blocks"][i]:
+        for a in map["blocks"][i]: ## Pretty sure this only works because there's free space at the end, this wouild be a bug if the end is a data block
             if len(a) > 0:
                 for c in a:
                     array.append(str(c))

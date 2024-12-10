@@ -3,8 +3,7 @@ Q1, Q2 = 0, 0
 
 def get_data():
     with open('/home/matt/repos/advent-2024/10/data.txt') as f:
-        data = []
-        trailheads = []
+        data, trailheads = [], []
         for y, line in enumerate(f):
             data.append([])
             for x,char in enumerate(line.strip()):
@@ -26,18 +25,12 @@ def get_coord(map,coord,dir=None):
     return([map[y][x], (x,y)])
 
 def get_neighbors(map, pos, elevation = None):
-    width = len(map[0])-1
-    height = len(map)-1
-    possible_moves =[]
-    a = []
-    if pos[1] > 0:
-        a.append(get_coord(map, pos, "N"))
-    if pos[1] < height:
-        a.append(get_coord(map, pos, "S"))
-    if pos[0] > 0:
-        a.append(get_coord(map, pos, "W"))
-    if pos[0] < width:
-        a.append(get_coord(map, pos, "E"))
+    width, height = len(map[0])-1, len(map)-1
+    possible_moves, a = [], []
+    a.append(get_coord(map, pos, "N")) if pos[1] > 0 else next
+    a.append(get_coord(map, pos, "S")) if pos[1] < height else next
+    a.append(get_coord(map, pos, "W")) if pos[0] > 0 else next
+    a.append(get_coord(map, pos, "E")) if pos[0] < width else next
     if elevation is not None:
         for c in a:
             if c[0] == elevation + 1:
@@ -45,7 +38,6 @@ def get_neighbors(map, pos, elevation = None):
     else:
                 possible_moves = [c for c in a]
     return(possible_moves)
-
 
 def find_path_end(map,pos,elevation):
     paths = [{"elevation": elevation, "path": [pos]}]
@@ -74,8 +66,7 @@ def find_path_end(map,pos,elevation):
             else:
                 print("Path Complete {} at elevation{}".format(i, path["elevation"]))
 
-    final_path = []
-    final_values = []
+    final_path, final_values = [], []
     q2_paths = 0
     for i,path in enumerate(paths):
         if "X" not in path["path"]:
@@ -87,16 +78,14 @@ def find_path_end(map,pos,elevation):
 
     return(final_path, final_values, q2_paths)
 
-
 map, trailheads = get_data()
 scores = []
 
 for trailhead in trailheads:
     elevation, coord = get_coord(map, trailhead)
     coords, elevations, rating = find_path_end(map,coord,elevation)
-    score = elevations.count(9)
-    scores.append(score)
+    Q1 += elevations.count(9)
     Q2 += rating
 
-print("Q1: {}".format(sum(scores)))
+print("Q1: {}".format(Q1))
 print("Q2: {}".format(Q2))

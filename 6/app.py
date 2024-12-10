@@ -58,7 +58,6 @@ def search_path(pos, path, max, inverse=False):
 def draw_map(map, visited, test_pos=[], loop=[]):
     map = copy.deepcopy(map)
     for i,c in enumerate(visited):
-        #print(c)
         coord = c.split(':')
         map[int(coord[1])][int(coord[0])] = "X"
     if len(loop) > 0:

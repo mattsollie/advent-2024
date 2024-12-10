@@ -1,6 +1,5 @@
 from copy import deepcopy
-Q1 = 0
-Q2 = 0
+Q1, Q2 = 0, 0
 
 def get_data():
     with open('/home/matt/repos/advent-2024/9/data.txt') as f:
@@ -27,8 +26,7 @@ def print_disk(map, ret_str=True): #Used for Q2 to build flat array
 map = {"blocks":[],"free":[]}
 disk_map = get_data()[0]
 modes = ['blocks','free']
-i = 0
-id = 0
+i, id = 0, 0
 
 for char in disk_map:
     mode = modes[i]
@@ -48,7 +46,7 @@ for i,m in enumerate(map["free"]):
     moved_blocks = 0
     iter += 1
     while moved_blocks < num_blocks:
-        print("Processing Space {} itteration {}".format(i,iter))
+        #print("Processing Space {} itteration {}".format(i,iter))
         remaining_blocks = num_blocks - moved_blocks
         if len(map["blocks"][-1]) <= remaining_blocks:
             # Move whole sequence
@@ -90,5 +88,7 @@ for i,id in enumerate(print_disk(map2,False)):
     if id != ".": #This is a string array 
         Q2 += int(id) * i
  
+print("number of block elements: {}".format(len(map2["blocks"])))
+print("number of free elements: {}".format(len(map2["free"])))
 print("Q1: {}".format(Q1))
 print("Q2: {}".format(Q2))

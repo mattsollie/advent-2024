@@ -13,7 +13,6 @@ class Room:
         self.grid = grid
 
     def display(self, zoom=False):
-        #print(self.grid)
         state = []
         for i,l in enumerate(self.grid):
             state.append(l.copy())
@@ -35,7 +34,6 @@ class Room:
                 score += (100 * n) + b
         return(score)
 
-
     def move(self, char):
         print("Move {}".format(char))
         x,y = 0,0
@@ -47,8 +45,7 @@ class Room:
             y += 1
         elif char == '^':
             y-= 1
-        space = False
-        blocked = False
+
         print("  Move {} to {}".format(self.pos_x, self.pos_x + x))
         if x != 0:
             if (self.pos_x + x) in self.map[self.pos_y]: # wall - skip
@@ -58,7 +55,6 @@ class Room:
                 self.pos_x = self.pos_x + x
             elif (self.pos_x + x) not in self.map[self.pos_y] and (self.pos_x + x) in self.boxes[self.pos_y]: #no wall, but a box
                 print("    Box location")
-                #print(" Row {}".format(self.boxes[self.pos_y]))
                 found = False
                 s = self.pos_x + x
                 while found == False and s > 0 and s < max_x:
@@ -90,8 +86,6 @@ class Room:
             boxes = [i for i, x in enumerate(self.boxes) if self.pos_x in x]
             walls = [i for i, x in enumerate(self.map) if self.pos_x in x]
         
-            #print(boxes)
-            #print(walls)
             if (self.pos_y + y) in walls: # wall - skip
                 print("   Hit Wall")
             elif (self.pos_y + y) not in  walls and (self.pos_y + y) not in boxes: #Open position
@@ -126,13 +120,7 @@ class Room:
                     self.pos_y = self.pos_y + y
                 else:
                     print("no free space found")
-            else:
-                print("here")
-                print(boxes)
-                print(walls)
-                print(self.pos_x,self.pos_y)
-        #self.display()
-        #sleep(1)
+
 
                 
                     
@@ -171,21 +159,9 @@ def get_data():
                 boxes.append(l_boxes)
                 grid.append(l_grid)
                 max_y += 1
-    # grid.pop(-1)
-    # grid.pop(-1)
-    # map.pop(-1)
-    # map.pop(-1)
-    # boxes.pop(-1)
-    # boxes.pop(-1)
     return(map, boxes, moves, r, len(grid[0]), max_y-1, grid)
 
 map, boxes, moves, r, max_x, max_y, grid = get_data()
-print(max_x, max_y)
-# print(map)
-# print(boxes)
-# print(moves)
-# print(r)
-# print(grid)
 
 room = Room(map, boxes, r, max_x, max_y, grid)
 room.display(False)
